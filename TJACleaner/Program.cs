@@ -6,7 +6,15 @@ namespace TJACleaner
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            /*if (args.Length > 0)
+            {
+                foreach (string i in args)
+                {
+                    Console.Write(i);
+                }
+            }*/
+            TestCase.TestCase1();
+            Console.ReadLine();
         }
     }
 }
