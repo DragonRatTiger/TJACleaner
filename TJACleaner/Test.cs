@@ -19,8 +19,9 @@ namespace TJACleaner
 			Console.WriteLine("Please write a sample bar.");
 			string input = Console.ReadLine();
 			// Converts the bar (string) inputted by the user into a char array.
+			// The ternary operator will be used to check if the string given contains a comma, which is used to separate bars.
 			// To ensure it's only reading a single bar and not multiple bars, any comma added to the user input will be used to remove any extra input after the comma.
-			char[] bar = input.Remove(input.IndexOf(','), (input.Length - input.IndexOf(','))).ToCharArray();
+			char[] bar = input.Contains(",") ? input.Remove(input.IndexOf(','), (input.Length - input.IndexOf(','))).ToCharArray() : input.ToCharArray();
 
 			int a = 0;
 			List<int> spaces = new List<int> { 0 };
@@ -79,20 +80,21 @@ namespace TJACleaner
 
 			// If the bar can, in fact, be reduced of its excess spacing, this if statement will be used.
 			string newbar = string.Join("", bar);
+			int removecount = 0;
 			if (canBeReduced)
 			{
 				int nextNote = 0;
 				for (int j = 0; j < (bar.Length / spaces.Min()); ++j)
                 {
 					newbar = newbar.Remove((nextNote + 1), (spaces.Min() - 1));
+					removecount += (spaces.Min() - 1);
 					++nextNote;
                 }
             }
 
-			Console.WriteLine(string.Join(",", spaces));
-			Console.Write("Can be reduced: ");
-			Console.WriteLine(canBeReduced.ToString());
-			if (canBeReduced) { Console.WriteLine(newbar); }
+			Console.WriteLine("\nSpace count: {0} (Total: {1})", string.Join(",", spaces), bar.Length);
+			Console.WriteLine("Can be reduced: {0}\n", canBeReduced);
+			if (canBeReduced) { Console.WriteLine("{0}\n",newbar); Console.WriteLine("Number of spaces removed: {0}\n", removecount); }
 			Console.WriteLine("Done!");
 		}
     }
